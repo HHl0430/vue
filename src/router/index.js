@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import HelloWorld from '@/components/HelloWorld'
 import Home from '@/components/Home'
+import Login from '@/login/Login'
 import Public from '@/components/public'
 
 Vue.use(Router)
@@ -14,7 +15,7 @@ export default new Router({
             path: '*',
             name: 'Public',
             component: Public,
-            redirect: '/home',
+            redirect: '/login',
             children:[
               {
                 path: '/helloWorld',
@@ -28,6 +29,11 @@ export default new Router({
                 component: Home,
             }
             ]
+        },
+        {
+          path: '/login',
+          name: 'Login',
+          component: Login,
         },
     ]
 })

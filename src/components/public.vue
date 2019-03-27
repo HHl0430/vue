@@ -42,6 +42,24 @@
         <span slot="title">helloWorld</span>
       </el-menu-item>
     </el-menu>
+    <el-dialog
+      title="提示"
+      :visible.sync="dialogVisible"
+      width="30%"
+      :before-close="handleClose"
+    >
+      <span>是否注销</span>
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button
+          type="primary"
+          @click="$router.push({path:'/login'})"
+        >确 定</el-button>
+      </span>
+    </el-dialog>
     <router-view class="router" />
   </div>
 </template>
@@ -51,7 +69,8 @@ export default {
   name: "Public",
   data() {
     return {
-      activeIndex: "1"
+      activeIndex: "1",
+      dialogVisible: false
     };
   },
   methods: {
@@ -60,7 +79,14 @@ export default {
     },
     handleClose() {},
     logout() {
-      alert(1);
+      this.dialogVisible = true;
+    },
+    handleClose(done) {
+      this.$confirm("确认关闭？")
+        .then(_ => {
+          done();
+        })
+        .catch(_ => {});
     }
   }
 };
@@ -77,7 +103,7 @@ export default {
   }
   .el-menu-vertical-demo {
     width: 230px;
-    height: calc(100% - 60px);
+    height: calc(100% - 61px);
     float: left;
   }
   .header {
@@ -85,9 +111,11 @@ export default {
     width: 100%;
     background: #fff;
     vertical-align: middle;
+    border-bottom: #e5e7e9 1px solid;
     img {
-      width: 60px;
+      width: 160px;
       height: 60px;
+      margin-left: -25px;
     }
     .title {
       display: inline-block;
