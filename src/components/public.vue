@@ -1,0 +1,129 @@
+<template>
+  <div class="public">
+    <div class="header">
+      <img
+        src="../assets/logo.jpg"
+        alt=""
+      >
+      <span class="title">
+        VUE-DRILL
+      </span>
+      <div class="fr">
+        <span class="name">
+          XXX
+        </span>
+        <img
+          class="portrait"
+          src="../assets/portrait.jpg"
+          alt=""
+        >
+        <span
+          class="logout"
+          @click="logout"
+        >
+          LOGOUT
+        </span>
+      </div>
+
+    </div>
+    <el-menu
+      default-active="/home"
+      class="el-menu-vertical-demo"
+      router
+      @open="handleOpen"
+      @close="handleClose"
+    >
+      <el-menu-item index="/home">
+        <i class="el-icon-setting"></i>
+        <span slot="title">首页</span>
+      </el-menu-item>
+      <el-menu-item index="/helloWorld">
+        <i class="el-icon-setting"></i>
+        <span slot="title">helloWorld</span>
+      </el-menu-item>
+    </el-menu>
+    <router-view class="router" />
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Public",
+  data() {
+    return {
+      activeIndex: "1"
+    };
+  },
+  methods: {
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleClose() {},
+    logout() {
+      alert(1);
+    }
+  }
+};
+</script>
+
+<style scoped lang='less'>
+.public {
+  height: 100%;
+  .router {
+    width: calc(100% - 271px);
+    height: calc(100% - 105px);
+    padding: 20px;
+    float: right;
+  }
+  .el-menu-vertical-demo {
+    width: 230px;
+    height: calc(100% - 60px);
+    float: left;
+  }
+  .header {
+    height: 60px;
+    width: 100%;
+    background: #fff;
+    vertical-align: middle;
+    img {
+      width: 60px;
+      height: 60px;
+    }
+    .title {
+      display: inline-block;
+      height: 100%;
+      vertical-align: top;
+      line-height: 60px;
+      font-weight: 700;
+      font-size: 18px;
+      color: #409eff;
+    }
+    .fr {
+      margin-right: 20px;
+      .name {
+        display: inline-block;
+        height: 100%;
+        color: #409eff;
+        // vertical-align: middle;
+        font-size: 14px;
+        line-height: 60px;
+      }
+      .portrait {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        // padding-top: 10px;
+        position: relative;
+        top: 10px;
+        margin-left: 10px;
+      }
+      .logout {
+        margin-left: 10px;
+        color: #828282;
+        font-size: 14px;
+        cursor: pointer;
+      }
+    }
+  }
+}
+</style>
