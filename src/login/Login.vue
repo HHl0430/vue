@@ -55,6 +55,10 @@ export default {
       }
     };
   },
+  created() {
+    this.delCookie("user");
+    this.delCookie("pswd");
+  },
   methods: {
     login() {
       if (this.numberValidateForm.account !== 123456) {
@@ -63,19 +67,33 @@ export default {
           message: "请输入正确的账号",
           type: "warning"
         });
+        return
       }
-       if (this.numberValidateForm.passWord !== 123456) {
-           console.log(this.numberValidateForm.passWord)
+      if (this.numberValidateForm.passWord !== 123456) {
+        console.log(this.numberValidateForm.passWord);
         this.$message({
           showClose: true,
           message: "请输入正确的密码",
           type: "warning"
         });
-      
+        return
       }
-        if(this.numberValidateForm.passWord ===123456 &&  this.numberValidateForm.account === 123456) {
-            this.$router.push({path:'/home'});
-        }
+      if (
+        this.numberValidateForm.passWord === 123456 &&
+        this.numberValidateForm.account === 123456
+      ) {
+        this.setCookie("user", this.numberValidateForm.account, 7);
+        this.setCookie("pswd", this.numberValidateForm.passWord, 7);
+        this.$router.push({ path: "/home" });
+      }
+    },
+    setCookie(name, value, day) {
+      var date = new Date();
+      date.setDate(date.getDate() + day);
+      document.cookie = name + "=" + value + ";expires=" + date;
+    },
+    delCookie(name) {
+      this.setCookie(name, null, -1);
     },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {

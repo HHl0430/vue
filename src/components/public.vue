@@ -56,7 +56,7 @@
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button
           type="primary"
-          @click="$router.push({path:'/login'})"
+          @click=" $router.push({path:'/login'})"
         >确 定</el-button>
       </span>
     </el-dialog>
@@ -73,11 +73,35 @@ export default {
       dialogVisible: false
     };
   },
+  created() {
+    if(this.getCookie('user') && this.getCookie('pswd')){
+     
+    }else {
+      console.log(111)
+      this.$router.push({path:'/login'})
+    }
+  },
   methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
     },
-    handleClose() {},
+    getCookie(name) {
+      var reg = RegExp(name + "=([^;]+)");
+      var arr = document.cookie.match(reg);
+      if (arr) {
+        return arr[1];
+      } else {
+        return "";
+      }
+    },
+     setCookie(name, value, day) {
+      var date = new Date();
+      date.setDate(date.getDate() + day);
+      document.cookie = name + "=" + value + ";expires=" + date;
+    },
+    delCookie(name) {
+      this.setCookie(name, null, -1);
+    },
     logout() {
       this.dialogVisible = true;
     },

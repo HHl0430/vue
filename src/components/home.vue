@@ -23,7 +23,7 @@
           <el-button
             size='small '
             type="primary"
-            @click="$store.dispatch('switch_dialog')"
+            @click="onSubmit"
           >查询</el-button>
         </el-col>
       </el-row>
@@ -92,9 +92,13 @@ export default {
       ]
     };
   },
+   created() {
+    //  console.log(11)
+   },
   methods: {
     onSubmit() {
       console.log("submit!");
+      console.log(22)
     }
   }
 };

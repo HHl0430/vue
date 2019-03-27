@@ -1,10 +1,13 @@
-# vue-demo
+# vue-drill
 
 > A Vue.js project
 
 ## Build Setup
 
 ``` bash
+# 项目介绍
+练习vuex，系统学习vue 
+
 # install dependencies
 npm install
 
