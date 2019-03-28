@@ -4,17 +4,27 @@ import Vue from "vue";
 import App from "./App";
 import router from "./router";
 import ElementUI from "element-ui";
+import VueAMap from "vue-amap"; //引入地图api
+import store from "./store"; //引入vuex
+import VueHighcharts from "vue-highcharts"; //引入highcharts
+import util from "./util"; //引入公共方法
+import axios from "axios";
+import { get, post } from "./seavers/axios";
 import "element-ui/lib/theme-chalk/index.css";
+//引入公共样式
 import "./assets/reset.css";
-import VueAMap from "vue-amap";
-import store from "./store";
-import VueHighcharts from "vue-highcharts";
-import util from "./util"
-Vue.prototype.$util = util
+
+//将方法存放到vue的实例上
+Vue.prototype.$ajax = axios;
+Vue.prototype.$util = util;
+Vue.prototype.$get = get;
+Vue.prototype.$post = post;
 Vue.use(ElementUI);
 Vue.use(VueAMap);
 Vue.use(VueHighcharts);
+
 Vue.config.productionTip = false;
+
 VueAMap.initAMapApiLoader({
   key: "c26a361e74bc694721937374a4457201",
   plugin: [
@@ -40,7 +50,6 @@ new Vue({
   methods: {
     moreChart() {
       var options = this.getMoreOptions(this.type);
-
       if (this.chart) {
         this.chart.destroy();
       }

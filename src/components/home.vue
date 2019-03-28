@@ -92,13 +92,16 @@ export default {
       ]
     };
   },
-   created() {
+  created() {
+    this.$get("web/account.youzan.com/settings/general").then(res => {
+      console.log(res)
+    });
     //  console.log(11)
-   },
+  },
   methods: {
     onSubmit() {
       console.log("submit!");
-      console.log(22)
+      console.log(22);
     }
   }
 };
