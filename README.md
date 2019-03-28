@@ -7,7 +7,10 @@
 ``` bash
 # 项目介绍
 练习vuex，系统学习vue 
-
+#登录注册 
+用户信息用vuex存储
+所以不要刷新页面刷新页面账号信息全部销毁
+不要刷新！不要刷新！不要刷新！
 # install dependencies
 npm install
 

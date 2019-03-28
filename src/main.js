@@ -9,6 +9,8 @@ import "./assets/reset.css";
 import VueAMap from "vue-amap";
 import store from "./store";
 import VueHighcharts from "vue-highcharts";
+import util from "./util"
+Vue.prototype.$util = util
 Vue.use(ElementUI);
 Vue.use(VueAMap);
 Vue.use(VueHighcharts);

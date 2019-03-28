@@ -84,8 +84,8 @@ export default {
     };
   },
   created() {
-    if (this.getCookie("user") && this.getCookie("pswd")) {
-      this.uesrName = this.getCookie("user");
+    if ( this.$util.getCookie("user") &&  this.$util.getCookie("pswd")) {
+      this.uesrName =  this.$util.getCookie("user");
     } else {
       console.log(111);
       this.$router.push({ path: "/login" });
@@ -94,23 +94,6 @@ export default {
   methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
-    },
-    getCookie(name) {
-      var reg = RegExp(name + "=([^;]+)");
-      var arr = document.cookie.match(reg);
-      if (arr) {
-        return arr[1];
-      } else {
-        return "";
-      }
-    },
-    setCookie(name, value, day) {
-      var date = new Date();
-      date.setDate(date.getDate() + day);
-      document.cookie = name + "=" + value + ";expires=" + date;
-    },
-    delCookie(name) {
-      this.setCookie(name, null, -1);
     },
     logout() {
       this.dialogVisible = true;

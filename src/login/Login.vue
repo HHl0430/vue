@@ -56,12 +56,13 @@ export default {
     };
   },
   created() {
-    this.delCookie("user");
-    this.delCookie("pswd");
+    console.log(this.$util);
+    this.$util.delCookie("user");
+    this.$util.delCookie("pswd");
   },
   methods: {
     login() {
-      this.numberValidateForm.account += ''
+      this.numberValidateForm.account += "";
       if (this.$store.state.user.indexOf(this.numberValidateForm.account) < 0) {
         this.$message({
           showClose: true,
@@ -80,17 +81,9 @@ export default {
         });
         return;
       }
-      this.setCookie("user", this.numberValidateForm.account, 7);
-      this.setCookie("pswd", this.numberValidateForm.passWord, 7);
+      this.$util.setCookie("user", this.numberValidateForm.account, 7);
+      this.$util.setCookie("pswd", this.numberValidateForm.passWord, 7);
       this.$router.push({ path: "/home" });
-    },
-    setCookie(name, value, day) {
-      var date = new Date();
-      date.setDate(date.getDate() + day);
-      document.cookie = name + "=" + value + ";expires=" + date;
-    },
-    delCookie(name) {
-      this.setCookie(name, null, -1);
     },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
