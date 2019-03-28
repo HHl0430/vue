@@ -6,6 +6,7 @@ import Home from "@/components/Home";
 import Login from "@/login/Login";
 import Public from "@/components/public";
 import Charts from "@/components/charts";
+import Registered from "@/login/Registered";
 Vue.use(Router);
 
 export default new Router({
@@ -38,6 +39,11 @@ export default new Router({
       path: "/login",
       name: "Login",
       component: Login
+    },
+    {
+      path: "/registered",
+      name: "Registered",
+      component: Registered
     }
   ]
 });

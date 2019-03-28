@@ -37,7 +37,7 @@
             round
             @click="login"
           >登录</el-button>
-          <p class="registered">还没有账号?<span>立即注册>></span></p>
+          <p class="registered">还没有账号?<span @click="$router.push({path:'/registered'})">立即注册>></span></p>
         </el-form-item>
       </el-form>
 
@@ -61,31 +61,28 @@ export default {
   },
   methods: {
     login() {
-      if (this.numberValidateForm.account !== 'admin') {
+      this.numberValidateForm.account += ''
+      if (this.$store.state.user.indexOf(this.numberValidateForm.account) < 0) {
         this.$message({
           showClose: true,
           message: "请输入正确的账号",
           type: "warning"
         });
-        return
+        return;
       }
-      if (this.numberValidateForm.passWord !== 123456) {
-        console.log(this.numberValidateForm.passWord);
+      if (
+        this.$store.state.pswd.indexOf(this.numberValidateForm.passWord) < 0
+      ) {
         this.$message({
           showClose: true,
           message: "请输入正确的密码",
           type: "warning"
         });
-        return
+        return;
       }
-      if (
-        this.numberValidateForm.passWord === 123456 &&
-        this.numberValidateForm.account === 'admin'
-      ) {
-        this.setCookie("user", this.numberValidateForm.account, 7);
-        this.setCookie("pswd", this.numberValidateForm.passWord, 7);
-        this.$router.push({ path: "/home" });
-      }
+      this.setCookie("user", this.numberValidateForm.account, 7);
+      this.setCookie("pswd", this.numberValidateForm.passWord, 7);
+      this.$router.push({ path: "/home" });
     },
     setCookie(name, value, day) {
       var date = new Date();

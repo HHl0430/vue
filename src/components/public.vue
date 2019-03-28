@@ -5,13 +5,16 @@
         src="../assets/logo.jpg"
         alt=""
       >
-      <span class="title">
+      <span
+        class="title"
+        @click="$router.push({path:'/home'})"
+      >
         VUE-DRILL
       </span>
       <div class="fr">
         <i class="iconfont icon-icon-"></i>
         <span class="name">
-          XXX
+          {{uesrName}}
         </span>
         <img
           class="portrait"
@@ -76,11 +79,13 @@ export default {
   data() {
     return {
       activeIndex: "1",
-      dialogVisible: false
+      dialogVisible: false,
+      uesrName: ""
     };
   },
   created() {
     if (this.getCookie("user") && this.getCookie("pswd")) {
+      this.uesrName = this.getCookie("user");
     } else {
       console.log(111);
       this.$router.push({ path: "/login" });
@@ -130,7 +135,7 @@ export default {
     width: 230px;
     height: calc(100% - 61px);
     float: left;
-    .icon-chart{
+    .icon-chart {
       margin-right: 10px;
     }
   }
@@ -153,6 +158,8 @@ export default {
       font-weight: 700;
       font-size: 18px;
       color: #409eff;
+      margin-left: -40px;
+      cursor: pointer;
     }
     .fr {
       margin-right: 20px;
