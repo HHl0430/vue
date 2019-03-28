@@ -29,7 +29,7 @@
 
     </div>
     <el-menu
-      default-active="/home"
+      :default-active='$route.path'
       class="el-menu-vertical-demo"
       router
       @open="handleOpen"
@@ -43,7 +43,7 @@
         <i class="el-icon-location"></i>
         <span slot="title">地图</span>
       </el-menu-item>
-      <el-menu-item index="/map">
+      <el-menu-item index="/chart">
         <i class="iconfont icon-chart"></i>
         <span slot="title">图表</span>
       </el-menu-item>
@@ -111,8 +111,7 @@ export default {
       this.dialogVisible = true;
     },
     handleClose(done) {
-       done();
-     
+      done();
     }
   }
 };
@@ -131,6 +130,9 @@ export default {
     width: 230px;
     height: calc(100% - 61px);
     float: left;
+    .icon-chart{
+      margin-right: 10px;
+    }
   }
   .header {
     height: 60px;
@@ -176,8 +178,8 @@ export default {
         color: #828282;
         font-size: 14px;
         cursor: pointer;
-        i{
-          font-weight: 700
+        i {
+          font-weight: 700;
         }
       }
     }

@@ -8,8 +8,10 @@ import "element-ui/lib/theme-chalk/index.css";
 import "./assets/reset.css";
 import VueAMap from "vue-amap";
 import store from "./store";
+import VueHighcharts from "vue-highcharts";
 Vue.use(ElementUI);
 Vue.use(VueAMap);
+Vue.use(VueHighcharts);
 Vue.config.productionTip = false;
 VueAMap.initAMapApiLoader({
   key: "c26a361e74bc694721937374a4457201",
@@ -33,5 +35,16 @@ new Vue({
   store,
   components: { App },
   template: "<App/>",
+  methods: {
+    moreChart() {
+      var options = this.getMoreOptions(this.type);
+
+      if (this.chart) {
+        this.chart.destroy();
+      }
+      // 初始化 Highcharts 图表
+      this.chart = new Highcharts.Chart("highcharts-more", options);
+    }
+  },
   render: h => h(App)
 });
