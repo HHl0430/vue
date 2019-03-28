@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     login() {
-      if (this.numberValidateForm.account !== 123456) {
+      if (this.numberValidateForm.account !== 'admin') {
         this.$message({
           showClose: true,
           message: "请输入正确的账号",
@@ -80,7 +80,7 @@ export default {
       }
       if (
         this.numberValidateForm.passWord === 123456 &&
-        this.numberValidateForm.account === 123456
+        this.numberValidateForm.account === 'admin'
       ) {
         this.setCookie("user", this.numberValidateForm.account, 7);
         this.setCookie("pswd", this.numberValidateForm.passWord, 7);

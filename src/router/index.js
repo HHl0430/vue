@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import HelloWorld from '@/components/HelloWorld'
+import TheMap from '@/components/Map'
 import Home from '@/components/Home'
 import Login from '@/login/Login'
 import Public from '@/components/public'
@@ -18,9 +18,9 @@ export default new Router({
             redirect: '/login',
             children:[
               {
-                path: '/helloWorld',
-                name: 'HelloWorld',
-                component: HelloWorld,
+                path: '/map',
+                name: 'Map',
+                component: TheMap,
               },
               {
                 path: '/home',

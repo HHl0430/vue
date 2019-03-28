@@ -9,6 +9,7 @@
         VUE-DRILL
       </span>
       <div class="fr">
+        <i class="iconfont icon-icon-"></i>
         <span class="name">
           XXX
         </span>
@@ -21,6 +22,7 @@
           class="logout"
           @click="logout"
         >
+          <i class="iconfont icon-zhuxiao"></i>
           LOGOUT
         </span>
       </div>
@@ -34,12 +36,16 @@
       @close="handleClose"
     >
       <el-menu-item index="/home">
-        <i class="el-icon-setting"></i>
+        <i class="el-icon-menu"></i>
         <span slot="title">首页</span>
       </el-menu-item>
-      <el-menu-item index="/helloWorld">
-        <i class="el-icon-setting"></i>
-        <span slot="title">helloWorld</span>
+      <el-menu-item index="/map">
+        <i class="el-icon-location"></i>
+        <span slot="title">地图</span>
+      </el-menu-item>
+      <el-menu-item index="/map">
+        <i class="iconfont icon-chart"></i>
+        <span slot="title">图表</span>
       </el-menu-item>
     </el-menu>
     <el-dialog
@@ -74,11 +80,10 @@ export default {
     };
   },
   created() {
-    if(this.getCookie('user') && this.getCookie('pswd')){
-     
-    }else {
-      console.log(111)
-      this.$router.push({path:'/login'})
+    if (this.getCookie("user") && this.getCookie("pswd")) {
+    } else {
+      console.log(111);
+      this.$router.push({ path: "/login" });
     }
   },
   methods: {
@@ -94,7 +99,7 @@ export default {
         return "";
       }
     },
-     setCookie(name, value, day) {
+    setCookie(name, value, day) {
       var date = new Date();
       date.setDate(date.getDate() + day);
       document.cookie = name + "=" + value + ";expires=" + date;
@@ -106,11 +111,8 @@ export default {
       this.dialogVisible = true;
     },
     handleClose(done) {
-      this.$confirm("确认关闭？")
-        .then(_ => {
-          done();
-        })
-        .catch(_ => {});
+       done();
+     
     }
   }
 };
@@ -174,6 +176,9 @@ export default {
         color: #828282;
         font-size: 14px;
         cursor: pointer;
+        i{
+          font-weight: 700
+        }
       }
     }
   }
