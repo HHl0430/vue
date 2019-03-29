@@ -1,15 +1,12 @@
 <template>
   <div class="public">
-    <div class="header">
-      <img
-        src="../assets/logo.jpg"
-        alt=""
-      >
+    <div :class="isCollapse==true ? 'header active':'header'">
+
       <span
-        class="title"
-        @click="$router.push({path:'/home'})"
+        :class="isCollapse==true ? 'hamburger active':'hamburger'"
+        @click="isCollapse =!isCollapse"
       >
-        VUE-DRILL
+        <i class="iconfont icon-hamburger"></i>
       </span>
       <div class="fr">
         <i class="iconfont icon-icon-"></i>
@@ -31,26 +28,62 @@
       </div>
 
     </div>
-    <el-menu
-      :default-active='$route.path'
-      class="el-menu-vertical-demo"
-      router
-      @open="handleOpen"
-      @close="handleClose"
-    >
-      <el-menu-item index="/home">
-        <i class="el-icon-menu"></i>
-        <span slot="title">首页</span>
-      </el-menu-item>
-      <el-menu-item index="/map">
-        <i class="el-icon-location"></i>
-        <span slot="title">地图</span>
-      </el-menu-item>
-      <el-menu-item index="/chart">
-        <i class="iconfont icon-chart"></i>
-        <span slot="title">图表</span>
-      </el-menu-item>
-    </el-menu>
+    <div class="menu">
+      <div :class=" isCollapse==true ? 'logo active':'logo'">
+        <img
+          v-if="!isCollapse"
+          src="../assets/logo.jpg"
+          alt=""
+        >
+        <span
+          class="title"
+          v-if="!isCollapse"
+          @click="$router.push({path:'/home'})"
+        >
+          VUE-DRILL
+        </span>
+        <span
+          class="title"
+          v-else
+          @click="$router.push({path:'/home'})"
+        >
+          D
+        </span>
+      </div>
+      <el-menu
+        :default-active='$route.path'
+        class="el-menu-vertical-demo"
+        router
+        @open="handleOpen"
+        @close="handleClose"
+        :collapse="isCollapse"
+      >
+        <el-menu-item index="/home">
+          <i class="el-icon-menu"></i>
+          <span slot="title">首页</span>
+        </el-menu-item>
+        <el-menu-item index="/map">
+          <i class="el-icon-location"></i>
+          <span slot="title">地图</span>
+        </el-menu-item>
+        <el-menu-item index="/chart">
+          <i class="iconfont icon-chart"></i>
+          <span slot="title">图表</span>
+        </el-menu-item>
+      </el-menu>
+      <!-- <el-menu
+        
+       
+        router
+        :collapse='true'
+        mode='vertical'
+        @open="handleOpen"
+        @close="handleClose"
+      >
+      
+      </el-menu> -->
+    </div>
+
     <el-dialog
       title="提示"
       :visible.sync="dialogVisible"
@@ -69,7 +102,7 @@
         >确 定</el-button>
       </span>
     </el-dialog>
-    <router-view class="router" />
+    <router-view :class="isCollapse==true ? 'router active':'router'" />
   </div>
 </template>
 
@@ -80,14 +113,14 @@ export default {
     return {
       activeIndex: "1",
       dialogVisible: false,
+      isCollapse: false,
       uesrName: ""
     };
   },
   created() {
-    if ( this.$util.getCookie("user") &&  this.$util.getCookie("pswd")) {
-      this.uesrName =  this.$util.getCookie("user");
+    if (this.$util.getCookie("user") && this.$util.getCookie("pswd")) {
+      this.uesrName = this.$util.getCookie("user");
     } else {
-      console.log(111);
       this.$router.push({ path: "/login" });
     }
   },
@@ -109,40 +142,83 @@ export default {
 .public {
   height: 100%;
   .router {
+    margin: 61px 0 0 231px;
     width: calc(100% - 271px);
-    height: calc(100% - 105px);
+    min-height: calc(100% - 105px);
     padding: 20px;
     float: right;
+    transition: width 0.3s;
   }
-  .el-menu-vertical-demo {
-    width: 230px;
-    height: calc(100% - 61px);
-    float: left;
-    .icon-chart {
-      margin-right: 10px;
+  .router.active {
+    width: calc(100% - 105px);
+    transition: width 0.3s;
+  }
+  .menu {
+    height: 100%;
+    position: fixed;
+    .logo {
+      width: 230px;
+      height: 60px;
+      background: #fff;
+      border-bottom: #e5e7e9 1px solid;
+      transition: width 0.3s;
+      img {
+        width: 160px;
+        height: 60px;
+        margin-left: -25px;
+      }
+      .title {
+        display: inline-block;
+        height: 100%;
+        vertical-align: top;
+        line-height: 60px;
+        font-weight: 700;
+        font-size: 18px;
+        color: #409eff;
+        margin-left: -40px;
+        cursor: pointer;
+      }
+    }
+    .logo.active {
+      width: 65px;
+      transition: width 0.3s;
+      .title {
+        margin-left: 24px;
+        font-size: 40px;
+      }
+    }
+    .el-menu--collapse {
+      min-height: calc(100% - 61px);
+    }
+    .el-menu-vertical-demo:not(.el-menu--collapse) {
+      width: 230px;
+      min-height: calc(100% - 61px);
+      float: left;
+      .icon-chart {
+        margin-right: 10px;
+      }
     }
   }
+
   .header {
+    position: fixed;
+    right: 0;
+    z-index: 2;
     height: 60px;
-    width: 100%;
+    width: calc(100% - 231px);
     background: #fff;
     vertical-align: middle;
     border-bottom: #e5e7e9 1px solid;
-    img {
-      width: 160px;
-      height: 60px;
-      margin-left: -25px;
-    }
-    .title {
+    transition: width 0.3s;
+    .hamburger {
       display: inline-block;
+      width: 50px;
       height: 100%;
-      vertical-align: top;
       line-height: 60px;
-      font-weight: 700;
-      font-size: 18px;
-      color: #409eff;
-      margin-left: -40px;
-      cursor: pointer;
+      text-align: center;
+    }
+    .hamburger.active {
+      transform: rotate(90deg);
     }
     .fr {
       margin-right: 20px;
@@ -173,6 +249,10 @@ export default {
         }
       }
     }
+  }
+  .header.active {
+    width: calc(100% - 65px);
+    transition: width 0.3s;
   }
 }
 </style>
