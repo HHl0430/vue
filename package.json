@@ -16,6 +16,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "element-ui": "^2.6.3",
+    "babel-polyfill": "^6.26.0",
     "highcharts": "^7.0.3",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",

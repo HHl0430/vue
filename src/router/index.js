@@ -1,11 +1,11 @@
 import Vue from "vue";
 import Router from "vue-router";
 
-import TheMap from "@/components/Map";
-import Home from "@/components/Home";
+import TheMap from "@/pages/Map";
+import Home from "@/pages/home/Home";
 import Login from "@/login/Login";
 import Public from "@/components/public";
-import Charts from "@/components/charts";
+import Charts from "@/pages/charts";
 import Registered from "@/login/Registered";
 Vue.use(Router);
 

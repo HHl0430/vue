@@ -27,6 +27,7 @@
             type="passWord"
             v-model.number="numberValidateForm.passWord"
             autocomplete="off"
+            @keyup.enter.native="login"
             placeholder='请输入密码'
           ></el-input>
         </el-form-item>

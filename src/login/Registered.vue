@@ -49,9 +49,20 @@
                 class="login-btn"
                 type="primary"
                 round
-                @click="registered"
+                @click="getAuthCode"
               >获取验证码</el-button>
             </template>
+          </el-input>
+        </el-form-item>
+        <el-form-item
+          prop="authCode"
+          v-if="authCode != ''"
+        >
+          <el-input
+            type="tel"
+            placeholder='验证码'
+            v-model.number="numberValidateForm.authCode"
+          >
           </el-input>
         </el-form-item>
         <el-form-item>
@@ -84,14 +95,18 @@ export default {
         account: "",
         passWord: "",
         secondPassWord: "",
-        num: ""
-      }
+        num: "",
+        authCode: ""
+      },
+      authCode: ""
     };
   },
   methods: {
     registered() {
       this.numberValidateForm.account += "";
-      if (this.$store.state.user.indexOf(this.numberValidateForm.account) > -1) {
+      if (
+        this.$store.state.user.indexOf(this.numberValidateForm.account) > -1
+      ) {
         this.$message({
           showClose: true,
           message: "此账号已存在请直接登录",
@@ -127,10 +142,37 @@ export default {
         });
         this.numberValidateForm.secondPassWord = "";
         return;
+      } else if (this.numberValidateForm.authCode == "") {
+        this.$message({
+          showClose: true,
+          message: "请输入验证码",
+          type: "warning"
+        });
+        return;
       }
       this.$store.commit("addUser", this.numberValidateForm.account);
       this.$store.commit("addPswd", this.numberValidateForm.passWord);
       this.$router.push({ path: "/login" });
+    },
+    getAuthCode() {
+      let myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+      if (myreg.test(this.numberValidateForm.num)) {
+        let randomNum = Math.random()
+          .toString()
+          .slice(-6);
+        this.authCode = randomNum;
+        this.$message({
+          showClose: true,
+          message: "验证码:" + randomNum,
+          type: "success"
+        });
+      } else {
+        this.$message({
+          showClose: true,
+          message: "请输入正确的手机号",
+          type: "warning"
+        });
+      }
     }
   }
 };

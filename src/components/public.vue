@@ -1,108 +1,79 @@
 <template>
   <div class="public">
-    <div :class="isCollapse==true ? 'header active':'header'">
+    <el-container>
+      <el-header>
+        <div class="header">
+          <span class="logo">
+            <img
+              src="../assets/logo.jpg"
+              alt=""
+            >
+            <span
+              class="title"
+              @click="$router.push({path:'/home'})"
+            >
+              VUE-DRILL
+            </span>
+          </span>
+          <span
+            :class="isCollapse==true ? 'hamburger active':'hamburger'"
+            @click="isCollapse =!isCollapse"
+          >
+            <i class="iconfont icon-hamburger"></i>
+          </span>
+          <div class="fr">
+            <i class="iconfont icon-icon-"></i>
+            <span class="name">
+              {{uesrName}}
+            </span>
+            <img
+              class="portrait"
+              src="../assets/portrait.jpg"
+              alt=""
+            >
+            <span
+              class="logout"
+              @click="logout"
+            >
+              注销
+            </span>
+          </div>
+        </div>
+      </el-header>
 
-      <span
-        :class="isCollapse==true ? 'hamburger active':'hamburger'"
-        @click="isCollapse =!isCollapse"
-      >
-        <i class="iconfont icon-hamburger"></i>
-      </span>
-      <div class="fr">
-        <i class="iconfont icon-icon-"></i>
-        <span class="name">
-          {{uesrName}}
-        </span>
-        <img
-          class="portrait"
-          src="../assets/portrait.jpg"
-          alt=""
-        >
-        <span
-          class="logout"
-          @click="logout"
-        >
-          <i class="iconfont icon-zhuxiao"></i>
-          LOGOUT
-        </span>
-      </div>
+      <el-container>
+        <el-aside :style="!isCollapse ? 'width:200px;transition: width 0.3s;':'width:65px;transition: width 0.3s;'">
+          <div class="menu">
 
-    </div>
-    <div class="menu">
-      <div :class=" isCollapse==true ? 'logo active':'logo'">
-        <img
-          v-if="!isCollapse"
-          src="../assets/logo.jpg"
-          alt=""
-        >
-        <span
-          class="title"
-          v-if="!isCollapse"
-          @click="$router.push({path:'/home'})"
-        >
-          VUE-DRILL
-        </span>
-        <span
-          class="title"
-          v-else
-          @click="$router.push({path:'/home'})"
-        >
-          D
-        </span>
-      </div>
-      <el-menu
-        :default-active='$route.path'
-        class="el-menu-vertical-demo"
-        router
-        @open="handleOpen"
-        @close="handleClose"
-        :collapse="isCollapse"
-      >
-        <el-menu-item index="/home">
-          <i class="el-icon-menu"></i>
-          <span slot="title">首页</span>
-        </el-menu-item>
-        <el-menu-item index="/map">
-          <i class="el-icon-location"></i>
-          <span slot="title">地图</span>
-        </el-menu-item>
-        <el-menu-item index="/chart">
-          <i class="iconfont icon-chart"></i>
-          <span slot="title">图表</span>
-        </el-menu-item>
-      </el-menu>
-      <!-- <el-menu
-        
-       
-        router
-        :collapse='true'
-        mode='vertical'
-        @open="handleOpen"
-        @close="handleClose"
-      >
-      
-      </el-menu> -->
-    </div>
+            <el-menu
+              :default-active='$route.path'
+              class="el-menu-vertical-demo"
+              router
+              @open="handleOpen"
+              @close="handleClose"
+              :collapse="isCollapse"
+            >
+              <el-menu-item index="/home">
+                <i class="el-icon-menu"></i>
+                <span slot="title">首页</span>
+              </el-menu-item>
+              <el-menu-item index="/map">
+                <i class="el-icon-location"></i>
+                <span slot="title">地图</span>
+              </el-menu-item>
+              <el-menu-item index="/chart">
+                <i class="iconfont icon-chart"></i>
+                <span slot="title">图表</span>
+              </el-menu-item>
+            </el-menu>
+          </div>
+        </el-aside>
+        <el-main>
+          <router-view :class="isCollapse==true ? 'router active':'router'" />
+        </el-main>
+      </el-container>
+    </el-container>
 
-    <el-dialog
-      title="提示"
-      :visible.sync="dialogVisible"
-      width="30%"
-      :before-close="handleClose"
-    >
-      <span>是否注销</span>
-      <span
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button
-          type="primary"
-          @click=" $router.push({path:'/login'})"
-        >确 定</el-button>
-      </span>
-    </el-dialog>
-    <router-view :class="isCollapse==true ? 'router active':'router'" />
   </div>
 </template>
 
@@ -125,11 +96,18 @@ export default {
     }
   },
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
+    handleOpen(key, keyPath) {},
     logout() {
       this.dialogVisible = true;
+      this.$confirm("是否要登出?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.$router.push({ path: "/login" });
+        })
+        .catch(() => {});
     },
     handleClose(done) {
       done();
@@ -140,72 +118,65 @@ export default {
 
 <style scoped lang='less'>
 .public {
+  .el-aside {
+    z-index: 2;
+  }
   height: 100%;
   .router {
-    margin: 61px 0 0 231px;
-    width: calc(100% - 271px);
-    min-height: calc(100% - 105px);
-    padding: 20px;
+    width: 100%;
     float: right;
     transition: width 0.3s;
   }
   .router.active {
-    width: calc(100% - 105px);
+    width: 100%;
     transition: width 0.3s;
   }
   .menu {
     height: 100%;
     position: fixed;
-    .logo {
-      width: 230px;
-      height: 60px;
-      background: #fff;
-      border-bottom: #e5e7e9 1px solid;
-      transition: width 0.3s;
-      img {
-        width: 160px;
-        height: 60px;
-        margin-left: -25px;
-      }
-      .title {
-        display: inline-block;
-        height: 100%;
-        vertical-align: top;
-        line-height: 60px;
-        font-weight: 700;
-        font-size: 18px;
-        color: #409eff;
-        margin-left: -40px;
-        cursor: pointer;
-      }
-    }
-    .logo.active {
-      width: 65px;
-      transition: width 0.3s;
-      .title {
-        margin-left: 24px;
-        font-size: 40px;
-      }
-    }
+
     .el-menu--collapse {
-      min-height: calc(100% - 61px);
+      min-height: 100%;
     }
     .el-menu-vertical-demo:not(.el-menu--collapse) {
-      width: 230px;
-      min-height: calc(100% - 61px);
+      width: 200px;
+      height: 100%;
       float: left;
       .icon-chart {
         margin-right: 10px;
       }
     }
   }
-
+  .logo {
+    display: inline-block;
+    width: 230px;
+    height: 60px;
+    background: #fff;
+    border-bottom: #e5e7e9 1px solid;
+    transition: width 0.3s;
+    img {
+      width: 160px;
+      height: 60px;
+      margin-left: -25px;
+    }
+    .title {
+      display: inline-block;
+      height: 100%;
+      vertical-align: top;
+      line-height: 60px;
+      font-weight: 700;
+      font-size: 18px;
+      color: #409eff;
+      margin-left: -40px;
+      cursor: pointer;
+    }
+  }
   .header {
     position: fixed;
     right: 0;
     z-index: 2;
     height: 60px;
-    width: calc(100% - 231px);
+    width: 100%;
     background: #fff;
     vertical-align: middle;
     border-bottom: #e5e7e9 1px solid;
@@ -213,6 +184,7 @@ export default {
     .hamburger {
       display: inline-block;
       width: 50px;
+      position: absolute;
       height: 100%;
       line-height: 60px;
       text-align: center;
@@ -222,11 +194,11 @@ export default {
     }
     .fr {
       margin-right: 20px;
+      height: 100%;
       .name {
         display: inline-block;
         height: 100%;
         color: #409eff;
-        // vertical-align: middle;
         font-size: 14px;
         line-height: 60px;
       }
@@ -249,10 +221,6 @@ export default {
         }
       }
     }
-  }
-  .header.active {
-    width: calc(100% - 65px);
-    transition: width 0.3s;
   }
 }
 </style>

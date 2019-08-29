@@ -4,6 +4,7 @@
       <x-chart
         :id="id"
         :option="option"
+        @getmesage="getmesage"
       ></x-chart>
     </div>
   </div>
@@ -71,6 +72,11 @@ export default {
         ]
       }
     };
+  },
+  methods:{
+    getmesage(data) {
+      console.log(data)
+    }
   },
   components: {
     XChart
