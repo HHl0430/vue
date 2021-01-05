@@ -14,7 +14,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "element-ui": "^2.6.3",
     "babel-polyfill": "^6.26.0",
     "highcharts": "^7.0.3",
